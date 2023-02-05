@@ -26,14 +26,14 @@ func (p *processor) Process(snapshot *collect.Snapshot) (io.ReadCloser, error) {
 
 	// use slackcat
 	cmd := exec.Command("bash", "-c", "pt-query-digest --limit 100% "+bodyPath+" | slackcat" )
-	res, err := cmd.Output()
+	res, err := cmd.CombinedOutput()
 	if err != nil {
 		return nil, fmt.Errorf("external process aborted: %w", err)
 	}
 
 	cmd = exec.Command("pt-query-digest", "--limit", "100%", "--output", "json", bodyPath)
 
-	res, err = cmd.Output()
+	res, err = cmd.CombinedOutput()
 	if err != nil {
 		return nil, fmt.Errorf("external process aborted: %w", err)
 	}

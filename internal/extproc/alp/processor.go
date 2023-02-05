@@ -27,7 +27,7 @@ func (p *processor) Process(snapshot *collect.Snapshot) (io.ReadCloser, error) {
 
 	cmd := exec.Command("alp", "ltsv", "--limit", "30000", "--format", "tsv", "--file", bodyPath)
 
-	res, err := cmd.Output()
+	res, err := cmd.CombinedOutput()
 	if err != nil {
 		return nil, fmt.Errorf("external process aborted: %w", err)
 	}
